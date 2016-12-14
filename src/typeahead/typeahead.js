@@ -339,9 +339,10 @@ angular.module('mm.foundation.typeahead', ['mm.foundation.position', 'mm.foundat
       },
       link:function (scope, element, attrs) {
         var tplUrl = $parse(attrs.templateUrl)(scope.$parent) || 'template/typeahead/typeahead-match.html';
-        $http.get(tplUrl, {cache: $templateCache}).success(function(tplContent){
+        $http.get(tplUrl, {cache: $templateCache}).then(function(response){
+           var tplContent = response.data;
            element.replaceWith($compile(tplContent.trim())(scope));
-        });
+        }, angular.noop);
       }
     };
   }])
